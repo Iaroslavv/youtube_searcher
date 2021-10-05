@@ -1,26 +1,12 @@
-from googleapiclient.discovery import build
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, IntegerField
+from wtforms.fields.core import SelectField
+from wtforms.validators import DataRequired
 
-
-api = 'AIzaSyAPo1tx5P0Q8NqsJSLz1APFAvHnCT9UWtQ'
-
-
-def video_comments(video_id, comments_number):
-    
-    youtube = build('youtube', 'v3',
-                    developerKey=api)
-
-    request = youtube.commentThreads().list(
-    part='snippet',
-    videoId=video_id,
-    maxResults=comments_number,
-    )
-    response = request.execute()
-    new_list = []
-    for i in response['items']:
-        just = i['snippet']['topLevelComment']['snippet']['textOriginal']
-        new_list.append(just)
-    return new_list
-        
-    
-        
-print(video_comments('YGiUEkbKubk', 3))
+class SearhForm(FlaskForm):
+    myChoices = ['Views', 'Rating', 'Likes', 'Duration'] # need to fix
+    video_name = StringField("Video name", validators=[DataRequired()])
+    videos_number = IntegerField("Amount of videos", validators=[DataRequired()])
+    comments_number = IntegerField("Amount of comments", validators=[DataRequired()])
+    filter_by = SelectField(u'Filter By', choices = myChoices)
+    submit = SubmitField("Apply")
