@@ -4,9 +4,9 @@ from wtforms.fields.core import SelectField
 from wtforms.validators import DataRequired
 
 class SearhForm(FlaskForm):
-    myChoices = ['Views', 'Rating', 'Likes', 'Duration'] # need to fix
+    myChoices = ['Views', 'Upload Time', 'Rating']
     video_name = StringField("Video name", validators=[DataRequired()])
     videos_number = IntegerField("Amount of videos", validators=[DataRequired()])
     comments_number = IntegerField("Amount of comments", validators=[DataRequired()])
-    filter_by = SelectField(u'Filter By', choices = myChoices)
+    filter_by = SelectField('Filter By', choices = myChoices)
     submit = SubmitField("Apply")
